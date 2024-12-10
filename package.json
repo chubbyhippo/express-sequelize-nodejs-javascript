@@ -4,8 +4,9 @@
   "description": "express with tdd",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
     "dev": "node --watch --inspect .",
+    "lint": "eslint .",
+    "start": "node app.js",
     "test": "vitest"
   },
   "author": "chubbyhippo",
