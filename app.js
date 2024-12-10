@@ -1,4 +1,6 @@
-const express = require('express')
+import express from 'express'
+import * as console from 'node:console';
+
 const app = express()
 const port = 3000
 
