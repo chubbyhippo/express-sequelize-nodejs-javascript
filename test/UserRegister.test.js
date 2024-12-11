@@ -9,12 +9,12 @@ it('should return hello world', async () => {
   expect(response.text).toBe('Hello World!');
 });
 
-it('should return status 200 when signup request is valid', (done) => {
-  request(app).post('/app/users')
+it('should return status 200 when signup request is valid', async () => {
+  await request(app).post('/app/users')
     .send({
       username: 'test',
       email: 'test@test.com',
       password: 'password',
     })
-    .expect(200, done);
+    .expect(200);
 });
