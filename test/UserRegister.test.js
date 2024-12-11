@@ -10,11 +10,11 @@ it('should return hello world', async () => {
 });
 
 it('should return status 200 when signup request is valid', async () => {
-  await request(app).post('/app/users')
+  const response = await request(app).post('/app/users')
     .send({
       username: 'test',
       email: 'test@test.com',
       password: 'password',
-    })
-    .expect(200);
+    });
+  expect(response.status).toBe(200);
 });
