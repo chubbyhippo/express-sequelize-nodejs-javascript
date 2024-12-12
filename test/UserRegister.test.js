@@ -15,6 +15,6 @@ it('should return status 200 when signup request is valid', async () => {
       username: 'test',
       email: 'test@test.com',
       password: 'password',
-    });
-  expect(response.status).toBe(200);
+    }).expect(200);
+  expect(response.body.message).toBe('User created');
 });
