@@ -7,7 +7,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/app/users', (req, res) => {
-  res.send(req.body);
+  res.send({ message: 'User created' });
 });
 
 export default app;
