@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { createServer } from 'http';
-
+import axios from 'axios';
 import app from '../src/app';
 
 let server;
@@ -18,28 +18,22 @@ afterAll(async () => {
 
 describe('User registration test', () => {
   it('should return hello world', async () => {
-    const response = await fetch(`${baseUrl}/`);
+    const response = await axios.get(`${baseUrl}/`);
 
     expect(response.status).toBe(200);
-    let responseText = await response.text();
+    let responseText = response.data;
     expect(responseText).toBe('Hello World!');
   });
 
   it('should return status 200 when signup request is valid', async () => {
-    const response = await fetch(`${baseUrl}/app/users`, {
-      method: 'POST', // Use POST method
-      headers: {
-        'Content-Type': 'application/json', // Send JSON data
-      },
-      body: JSON.stringify({
-        username: 'test',
-        email: 'test@test.com',
-        password: 'password',
-      }),
+    const response = await axios.post(`${baseUrl}/app/users`, {
+      username: 'test',
+      email: 'test@test.com',
+      password: 'password',
     });
 
     expect(response.status).toBe(200);
-    const responseBody = await response.json();
+    const responseBody = response.data;
     expect(responseBody).toHaveProperty('message');
     expect(responseBody.message).toBe('User created');
   });
