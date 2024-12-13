@@ -1,4 +1,4 @@
-import app from './app'
+import app from './src/app'
 import console from 'node:console';
 
 const port = 3000
