@@ -1,14 +1,29 @@
 import request from 'supertest';
-import { describe, it, expect } from 'vitest';
+import { beforeAll, afterAll, describe, it, expect } from 'vitest';
+import { createServer } from 'http';
 
 import app from '../src/app';
 
+let server;
+let baseUrl;
+
+beforeAll(async () => {
+  server = createServer(app);
+  await server.listen(0);
+  baseUrl = `http://localhost:${server.address().port}`;
+});
+
+afterAll(async () => {
+  await server.close();
+});
+
 describe('User registration test', () => {
   it('should return hello world', async () => {
-    const response = await request(app).get('/');
+    const response = await fetch(`${baseUrl}/`);
 
     expect(response.status).toBe(200);
-    expect(response.text).toBe('Hello World!');
+    let responseText = await response.text();
+    expect(responseText).toBe('Hello World!');
   });
 
   it('should return status 200 when signup request is valid', async () => {
