@@ -1,4 +1,3 @@
-import request from 'supertest';
 import { beforeAll, afterAll, describe, it, expect } from 'vitest';
 import { createServer } from 'http';
 
@@ -27,16 +26,21 @@ describe('User registration test', () => {
   });
 
   it('should return status 200 when signup request is valid', async () => {
-
-    const response = await request(app).post('/app/users')
-      .send({
+    const response = await fetch(`${baseUrl}/app/users`, {
+      method: 'POST', // Use POST method
+      headers: {
+        'Content-Type': 'application/json', // Send JSON data
+      },
+      body: JSON.stringify({
         username: 'test',
         email: 'test@test.com',
         password: 'password',
-      });
+      }),
+    });
 
     expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty('message');
-    expect(response.body.message).toBe('User created');
+    const responseBody = await response.json();
+    expect(responseBody).toHaveProperty('message');
+    expect(responseBody.message).toBe('User created');
   });
 });
