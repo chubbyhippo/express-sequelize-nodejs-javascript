@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { createServer } from 'http';
 import axios from 'axios';
 import app from '../src/app';
@@ -7,14 +7,19 @@ import User from '../src/user.js';
 let server;
 let baseUrl;
 
-beforeEach(async () => {
+beforeAll( async () => {
   server = createServer(app);
   await server.listen(0);
-  baseUrl = `http://localhost:${server.address().port}`;
-});
 
-afterEach(async () => {
-  await server.close();
+  baseUrl = `http://localhost:${server.address().port}`;
+})
+
+afterAll(async () => {
+ server.close();
+})
+
+beforeEach(async () => {
+  await User.sync({ force: true });
 });
 
 describe('User registration test', () => {
