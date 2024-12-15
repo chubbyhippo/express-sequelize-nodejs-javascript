@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { createServer } from 'http';
 import axios from 'axios';
 import app from '../src/app';
+import User from '../src/user.js';
 
 let server;
 let baseUrl;
@@ -36,5 +37,11 @@ describe('User registration test', () => {
     const responseBody = response.data;
     expect(responseBody).toHaveProperty('message');
     expect(responseBody.message).toBe('User created');
+
+    User.findAll().then(
+      users => {
+        expect(users.length).toBe(1);
+      }
+    )
   });
 });
