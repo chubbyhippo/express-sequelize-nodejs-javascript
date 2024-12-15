@@ -55,10 +55,7 @@ describe('User registration test', () => {
       email: 'test@test.com',
     });
 
-    User.findAll().then(
-      users => {
-        expect(users.length).toBe(1);
-      },
-    );
+    const users = await User.findAll();
+    expect(users.length).toBe(1);
   });
 });
