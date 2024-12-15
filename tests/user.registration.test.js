@@ -3,7 +3,7 @@ import { createServer } from 'http';
 import axios from 'axios';
 import app from '../src/app';
 import User from '../src/user/user.js';
-import sequelize from '../src/database.js';
+import sequelize from '../src/shared/database.js';
 
 let server;
 let baseUrl;
