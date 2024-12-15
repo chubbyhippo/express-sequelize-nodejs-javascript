@@ -34,14 +34,14 @@ describe('User registration test', () => {
     expect(responseText).toBe('Hello World!');
   });
 
-  it('should return status 200 when signup request is valid', async () => {
+  it('should return status 201 when signup request is valid', async () => {
     const response = await axios.post(`${baseUrl}/api/users`, {
       username: 'test',
       password: 'password',
       email: 'test@test.com',
     });
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(201);
     const responseBody = response.data;
     expect(responseBody).toHaveProperty('message');
     expect(responseBody.message).toBe('User created');

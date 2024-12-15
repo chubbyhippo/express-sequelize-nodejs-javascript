@@ -12,6 +12,7 @@ app.get('/', (req, res) => {
 app.post('/api/users', async (req, res) => {
   const user = await User.create(req.body);
   console.log(user);
+  res.status(201);
   res.send({ message: 'User created' });
 });
 
