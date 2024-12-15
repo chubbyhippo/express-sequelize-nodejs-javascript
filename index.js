@@ -1,10 +1,9 @@
-import app from './src/app'
-import console from 'node:console';
+import app from './src/app.js';
+import User from './src/user.js';
 
-const port = 3000
+const port = 8080;
 
-app.listen(3000)
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+app.listen(port, async () => {
+  await User.sync({ force: true });
+  console.log(`Example app listening on port ${port}`);
+});
