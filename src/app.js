@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.post('/app/users', async (req, res) => {
+app.post('/api/users', async (req, res) => {
   const user = await User.create(req.body);
   console.log(user);
   res.send({ message: 'User created' });
