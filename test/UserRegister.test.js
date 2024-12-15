@@ -3,20 +3,23 @@ import { createServer } from 'http';
 import axios from 'axios';
 import app from '../src/app';
 import User from '../src/user.js';
+import sequelize from '../src/database.js';
 
 let server;
 let baseUrl;
 
-beforeAll( async () => {
+beforeAll(async () => {
   server = createServer(app);
   await server.listen(0);
 
+  await sequelize.sync({ force: true });
+
   baseUrl = `http://localhost:${server.address().port}`;
-})
+});
 
 afterAll(async () => {
- server.close();
-})
+  server.close();
+});
 
 beforeEach(async () => {
   await User.sync({ force: true });
@@ -46,7 +49,7 @@ describe('User registration test', () => {
     User.findAll().then(
       users => {
         expect(users.length).toBe(1);
-      }
-    )
+      },
+    );
   });
 });
