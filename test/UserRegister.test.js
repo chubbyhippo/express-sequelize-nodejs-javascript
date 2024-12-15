@@ -35,7 +35,7 @@ describe('User registration test', () => {
   });
 
   it('should return status 200 when signup request is valid', async () => {
-    const response = await axios.post(`${baseUrl}/app/users`, {
+    const response = await axios.post(`${baseUrl}/api/users`, {
       username: 'test',
       password: 'password',
       email: 'test@test.com',
