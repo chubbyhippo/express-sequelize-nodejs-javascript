@@ -1,17 +1,19 @@
-import Sequelize from 'sequelize';
-import sequelize from './database';
+import { DataTypes, Model } from 'sequelize';
+import sequelize from './database.js';
 
-const Model = Sequelize.Model;
 
-class User extends Model {}
+class User extends Model {
+}
 
 User.init({
-  username: Sequelize.STRING,
-  email: Sequelize.STRING,
-  password: Sequelize.STRING,
+  username: DataTypes.STRING,
+  email: DataTypes.STRING,
+  password: DataTypes.STRING,
 }, {
   sequelize,
   modelName: 'user',
-})
+});
+
+console.log(User === sequelize.models.User);
 
 export default User;
