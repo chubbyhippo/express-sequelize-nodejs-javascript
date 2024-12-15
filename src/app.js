@@ -1,5 +1,5 @@
 import express from 'express';
-import User from './user.js';
+import User from './user/user.js';
 import bcrypt from 'bcrypt';
 
 const app = express();
