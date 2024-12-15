@@ -34,12 +34,17 @@ describe('User registration test', () => {
     expect(responseText).toBe('Hello World!');
   });
 
-  it('should return status 201 when signup request is valid', async () => {
-    const response = await axios.post(`${baseUrl}/api/users`, {
+  async function createUser() {
+    return await axios.post(`${baseUrl}/api/users`, {
       username: 'test',
       password: 'password',
       email: 'test@test.com',
     });
+  }
+
+  it('should return status 201 when signup request is valid', async () => {
+
+    const response = await createUser();
 
     expect(response.status).toBe(201);
     const responseBody = response.data;
@@ -49,35 +54,20 @@ describe('User registration test', () => {
   });
 
   it('should save user to the database', async () => {
-    await axios.post(`${baseUrl}/api/users`, {
-      username: 'test',
-      password: 'password',
-      email: 'test@test.com',
-    });
-
+    await createUser();
     const users = await User.findAll();
     expect(users.length).toBe(1);
   });
 
   it('should save username and email to the database', async () => {
-    await axios.post(`${baseUrl}/api/users`, {
-      username: 'test',
-      password: 'password',
-      email: 'test@test.com',
-    });
-
+    await createUser();
     const users = await User.findAll();
     expect(users[0].username).toBe('test');
     expect(users[0].email).toBe('test@test.com');
   });
 
   it('should hash password in the database', async () => {
-    await axios.post(`${baseUrl}/api/users`, {
-      username: 'test',
-      password: 'password',
-      email: 'test@test.com',
-    });
-
+    await createUser();
     const users = await User.findAll();
     expect(users[0].password).not.toBe('password');
   })
