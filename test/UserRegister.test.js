@@ -69,5 +69,16 @@ describe('User registration test', () => {
     const users = await User.findAll();
     expect(users[0].username).toBe('test');
     expect(users[0].email).toBe('test@test.com');
+  });
+
+  it('should hash password in the database', async () => {
+    await axios.post(`${baseUrl}/api/users`, {
+      username: 'test',
+      password: 'password',
+      email: 'test@test.com',
+    });
+
+    const users = await User.findAll();
+    expect(users[0].password).not.toBe('password');
   })
 });
