@@ -46,6 +46,15 @@ describe('User registration test', () => {
     expect(responseBody).toHaveProperty('message');
     expect(responseBody.message).toBe('User created');
 
+  });
+
+  it('should save user to the database', async () => {
+    await axios.post(`${baseUrl}/api/users`, {
+      username: 'test',
+      password: 'password',
+      email: 'test@test.com',
+    });
+
     User.findAll().then(
       users => {
         expect(users.length).toBe(1);
