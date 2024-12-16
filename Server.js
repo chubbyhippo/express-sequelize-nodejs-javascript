@@ -1,5 +1,5 @@
 import app from './src/App.js';
-import sequelize from './src/shared/Database.js';
+import sequelize from './src/config/Database.js';
 import console from 'node:console';
 
 const port = 8080;
