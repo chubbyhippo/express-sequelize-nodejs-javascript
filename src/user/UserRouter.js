@@ -1,17 +1,8 @@
-import UserEntity from './UserEntity.js';
-import console from 'node:console';
 import express from 'express';
+import userController from './UserController.js';
 
 const router = express.Router();
 
-const createUser = () => async (req, res) => {
-  const user = await UserEntity.create(req.body);
-  console.log(user);
-  res.status(201);
-  res.send({ message: 'UserEntity created' });
-};
-
-router.post('/api/users', createUser());
+router.post('/api/users', userController.createUser());
 
 export default router;
-
