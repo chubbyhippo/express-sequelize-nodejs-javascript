@@ -1,9 +1,9 @@
-import userRepository from './UserRepository.js';
+import userService from './UserService.js';
 import console from 'node:console';
 
 class UserController {
   createUser = () => async (req, res) => {
-    const user = await userRepository.create(req.body);
+    const user = await userService.createUser(req.body);
     console.log(user);
     res.status(201);
     res.send({ message: 'UserEntity created' });
