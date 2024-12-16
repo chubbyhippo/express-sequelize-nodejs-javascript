@@ -1,7 +1,7 @@
 import express from 'express';
 import User from './user/user.js';
 import bcrypt from 'bcrypt';
-import console from 'console';
+import console from 'node:console';
 
 const app = express();
 
