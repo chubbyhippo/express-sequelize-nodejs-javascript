@@ -5,10 +5,10 @@
   "main": "Server.js",
   "type": "module",
   "scripts": {
-    "dev": "node --watch --inspect .",
+    "dev": "cross-env NODE_ENV=dev node --watch --inspect .",
     "lint": "eslint .",
     "start": "node .",
-    "test": "vitest"
+    "test": "cross-env NODE_ENV=test vitest"
   },
   "author": "chubbyhippo",
   "license": "Apache-2.0",
