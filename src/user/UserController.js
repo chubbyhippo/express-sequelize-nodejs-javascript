@@ -1,4 +1,4 @@
-import userService from './UserService.js';
+import userService from './UserService';
 import console from 'node:console';
 
 class UserController {
