@@ -2,12 +2,12 @@
   "name": "express-sequelize-nodejs-javascript",
   "version": "1.0.0",
   "description": "express with tdd",
-  "main": "index.js",
+  "main": "Server.js",
   "type": "module",
   "scripts": {
     "dev": "node --watch --inspect .",
     "lint": "eslint .",
-    "start": "node index.js",
+    "start": "node Server.js",
     "test": "vitest"
   },
   "author": "chubbyhippo",
