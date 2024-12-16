@@ -1,6 +1,5 @@
 import express from 'express';
 import User from './user/user.js';
-import bcrypt from 'bcrypt';
 import console from 'node:console';
 
 const app = express();
@@ -12,9 +11,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/users', async (req, res) => {
-  const hashedPassword = await bcrypt.hash(req.body.password, 10);
-  const userToBeSaved = { ...req.body, password: hashedPassword };
-  const user = await User.create(userToBeSaved);
+  const user = await User.create(req.body);
   console.log(user);
   res.status(201);
   res.send({ message: 'User created' });
