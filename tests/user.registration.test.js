@@ -1,9 +1,9 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { createServer } from 'http';
 import axios from 'axios';
-import app from '../src/App.js';
-import UserEntity from '../src/user/UserEntity.js';
-import sequelize from '../src/config/Database.js';
+import app from '../src/app.js';
+import UserEntity from '../src/user/user.entity.js';
+import sequelize from '../src/config/database.js';
 
 let server;
 let baseUrl;
@@ -25,7 +25,7 @@ beforeEach(async () => {
   await UserEntity.sync({ force: true });
 });
 
-describe('UserEntity registration test', () => {
+describe('user registration test', () => {
   it('should return hello world', async () => {
     const response = await axios.get(`${baseUrl}/`);
 

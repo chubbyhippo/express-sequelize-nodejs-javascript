@@ -2,7 +2,7 @@
   "name": "express-sequelize-nodejs-javascript",
   "version": "1.0.0",
   "description": "express with tdd",
-  "main": "Server.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
     "dev": "cross-env NODE_ENV=dev node --watch --inspect .",

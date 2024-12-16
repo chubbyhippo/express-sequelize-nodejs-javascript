@@ -1,5 +1,5 @@
 import express from 'express';
-import userRouter from './user/UserRouter.js';
+import userRouter from './user/user.router.js';
 import console from 'node:console';
 import process from 'node:process';
 

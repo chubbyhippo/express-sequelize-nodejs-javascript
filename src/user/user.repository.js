@@ -1,4 +1,4 @@
-import User from './UserEntity.js';
+import User from './user.entity.js';
 
 class UserRepository {
   async create(user) {
