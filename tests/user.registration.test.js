@@ -112,4 +112,20 @@ describe('user registration test', () => {
       }
     });
   });
+
+  it('should return Email email is required when email is null', async () => {
+    await postForUser({
+      username: 'username',
+      password: 'password',
+      email: null,
+    }).catch((error) => {
+      if (error.response) {
+        console.log(error.response);
+        expect(error.response.data).toHaveProperty('validationErrors');
+        const validationErrors = error.response.data.validationErrors;
+        console.log(validationErrors);
+        expect(validationErrors[0].msg).toBe('Email is required');
+      }
+    });
+  });
 });
