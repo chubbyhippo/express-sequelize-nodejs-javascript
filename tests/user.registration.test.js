@@ -83,4 +83,17 @@ describe('user registration test', () => {
       }
     });
   });
+
+  it('should return validationErrors field in response body when validation error occurs', async () => {
+    await postForUser({
+      username: null,
+      password: 'password',
+      email: 'test@test.com',
+    }).catch((error) => {
+      if (error.response) {
+        console.log(error.response);
+        expect(error.response.data).toHaveProperty('validationErrors');
+      }
+    })
+  })
 });
