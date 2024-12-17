@@ -40,11 +40,11 @@ describe('user registration test', () => {
     password: 'password',
     email: 'test@test.com',
   };
-  const postUser = async (userInputs) =>
+  const postForUser = async (userInputs) =>
     await axios.post(`${baseUrl}/api/users`, userInputs);
 
   it('should return status 201 when signup request is valid', async () => {
-    const response = await postUser(validUserInputs);
+    const response = await postForUser(validUserInputs);
 
     expect(response.status).toBe(201);
     const responseBody = response.data;
@@ -53,26 +53,26 @@ describe('user registration test', () => {
   });
 
   it('should save user to the database', async () => {
-    await postUser(validUserInputs);
+    await postForUser(validUserInputs);
     const users = await UserEntity.findAll();
     expect(users.length).toBe(1);
   });
 
   it('should save username and email to the database', async () => {
-    await postUser(validUserInputs);
+    await postForUser(validUserInputs);
     const users = await UserEntity.findAll();
     expect(users[0].username).toBe('test');
     expect(users[0].email).toBe('test@test.com');
   });
 
   it('should hash password in the database', async () => {
-    await postUser(validUserInputs);
+    await postForUser(validUserInputs);
     const users = await UserEntity.findAll();
     expect(users[0].password).not.toBe('password');
   });
 
   it('should return status 400 when username is null', async () => {
-    postUser({
+    postForUser({
       username: null,
       password: 'password',
       email: 'test@test.com',
