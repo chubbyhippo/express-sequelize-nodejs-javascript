@@ -4,6 +4,7 @@ import axios from 'axios';
 import app from '../src/app.js';
 import UserEntity from '../src/user/user.entity.js';
 import sequelize from '../src/config/database.js';
+import console from 'node:console';
 
 let server;
 let baseUrl;
@@ -34,16 +35,16 @@ describe('user registration test', () => {
     expect(responseText).toBe('Hello World!');
   });
 
-  async function createUser() {
-    return await axios.post(`${baseUrl}/api/users`, {
-      username: 'test',
-      password: 'password',
-      email: 'test@test.com',
-    });
-  }
+  const validUserInputs = {
+    username: 'test',
+    password: 'password',
+    email: 'test@test.com',
+  };
+  const createUser = async (userInputs) =>
+    await axios.post(`${baseUrl}/api/users`, userInputs);
 
   it('should return status 201 when signup request is valid', async () => {
-    const response = await createUser();
+    const response = await createUser(validUserInputs);
 
     expect(response.status).toBe(201);
     const responseBody = response.data;
@@ -52,33 +53,36 @@ describe('user registration test', () => {
   });
 
   it('should save user to the database', async () => {
-    await createUser();
+    await createUser(validUserInputs);
     const users = await UserEntity.findAll();
     expect(users.length).toBe(1);
   });
 
   it('should save username and email to the database', async () => {
-    await createUser();
+    await createUser(validUserInputs);
     const users = await UserEntity.findAll();
     expect(users[0].username).toBe('test');
     expect(users[0].email).toBe('test@test.com');
   });
 
   it('should hash password in the database', async () => {
-    await createUser();
+    await createUser(validUserInputs);
     const users = await UserEntity.findAll();
     expect(users[0].password).not.toBe('password');
   });
 
   it('should return status 400 when username is null', async () => {
-    await axios
-      .post(`${baseUrl}/api/users`, {
-        username: null,
-        password: 'password',
-        email: 'test@test.com',
-      })
-      .catch((error) => {
+    const invalidUser = {
+      username: null,
+      password: 'password',
+      email: 'test@test.com',
+    };
+    createUser(invalidUser).catch((error) => {
+      console.log(error);
+      if (error.response) {
+        console.log(error.response.data);
         expect(error.response.status).toBe(400);
-      });
+      }
+    });
   });
 });
