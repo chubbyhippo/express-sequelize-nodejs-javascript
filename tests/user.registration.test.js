@@ -94,6 +94,19 @@ describe('user registration test', () => {
         console.log(error.response);
         expect(error.response.data).toHaveProperty('validationErrors');
       }
-    })
-  })
+    });
+  });
+
+  it('should return Username cannot be null', async () => {
+    await postForUser({
+      username: null,
+      password: 'password',
+      email: 'test@test.com',
+    }).catch((error) => {
+      if (error.response) {
+        console.log(error.response);
+        expect(error.response.data).toHaveProperty('validationErrors');
+      }
+    });
+  });
 });
