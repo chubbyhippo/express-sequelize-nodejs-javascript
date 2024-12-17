@@ -72,12 +72,11 @@ describe('user registration test', () => {
   });
 
   it('should return status 400 when username is null', async () => {
-    const invalidUser = {
+    createUser({
       username: null,
       password: 'password',
       email: 'test@test.com',
-    };
-    createUser(invalidUser).catch((error) => {
+    }).catch((error) => {
       console.log(error);
       if (error.response) {
         console.log(error.response.data);
