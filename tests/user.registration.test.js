@@ -72,14 +72,13 @@ describe('user registration test', () => {
   });
 
   it('should return status 400 when username is null', async () => {
-    postForUser({
+    await postForUser({
       username: null,
       password: 'password',
       email: 'test@test.com',
     }).catch((error) => {
-      console.log(error);
       if (error.response) {
-        console.log(error.response.data);
+        console.log(error.response);
         expect(error.response.status).toBe(400);
       }
     });
