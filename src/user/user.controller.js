@@ -4,7 +4,8 @@ class UserController {
   createUser = () => async (req, res) => {
     const user = req.body;
     if (user.username === null) {
-      res.status(400).send({ message: 'Username cannot be null' });
+      res.status(400);
+      res.send({ message: '' });
       return;
     }
     await userService.createUser(req.body);
