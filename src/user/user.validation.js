@@ -2,6 +2,7 @@ import { body, validationResult } from 'express-validator';
 
 const userValidationRules = () => [
   body('username').notEmpty().withMessage('Username is required'),
+  body('password').notEmpty().withMessage('Password is required'),
   body('email').notEmpty().withMessage('Email is required'),
 ];
 

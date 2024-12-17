@@ -97,7 +97,7 @@ describe('user registration test', () => {
     });
   });
 
-  it('should return Username username is required when username is null', async () => {
+  it('should return Username is required when username is null', async () => {
     await postForUser({
       username: null,
       password: 'password',
@@ -109,6 +109,22 @@ describe('user registration test', () => {
         const validationErrors = error.response.data.validationErrors;
         console.log(validationErrors);
         expect(validationErrors[0].msg).toBe('Username is required');
+      }
+    });
+  });
+
+  it('should return Password is required when password is null', async () => {
+    await postForUser({
+      username: 'username',
+      password: null,
+      email: 'test@test.com',
+    }).catch((error) => {
+      if (error.response) {
+        console.log(error.response);
+        expect(error.response.data).toHaveProperty('validationErrors');
+        const validationErrors = error.response.data.validationErrors;
+        console.log(validationErrors);
+        expect(validationErrors[0].msg).toBe('Password is required');
       }
     });
   });
