@@ -97,7 +97,7 @@ describe('user registration test', () => {
     });
   });
 
-  it('should return Username cannot be null', async () => {
+  it('should return Username username is required when username is null', async () => {
     await postForUser({
       username: null,
       password: 'password',
