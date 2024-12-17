@@ -106,6 +106,9 @@ describe('user registration test', () => {
       if (error.response) {
         console.log(error.response);
         expect(error.response.data).toHaveProperty('validationErrors');
+        const validationErrors = error.response.data.validationErrors;
+        console.log(validationErrors);
+        expect(validationErrors[0].msg).toBe('Username is required');
       }
     });
   });
