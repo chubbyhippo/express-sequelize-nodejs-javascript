@@ -1,7 +1,8 @@
 import { body, validationResult } from 'express-validator';
 
-const userValidationRules = () =>
-  body('username').notEmpty().withMessage('Username is required');
+const userValidationRules = () => [
+  body('username').notEmpty().withMessage('Username is required'),
+];
 
 const validate = (req, res, next) => {
   const errors = validationResult(req);
