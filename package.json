@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=dev node --watch --inspect .",
     "lint": "eslint .",
-    "start": "node .",
+    "start": "cross-env NODE_ENV=dev node .",
     "test": "cross-env NODE_ENV=test vitest"
   },
   "author": "chubbyhippo",
