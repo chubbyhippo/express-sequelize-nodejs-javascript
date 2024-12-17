@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post(
   '/api/users',
-  userValidationRules(),
+  ...userValidationRules(),
   validate,
   userController.createUser()
 );
