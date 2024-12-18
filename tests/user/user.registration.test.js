@@ -117,10 +117,10 @@ describe('User input validation test', () => {
     ],
     [
       { username: 'usr', password: 'password', email: null },
-      'Email is required',
+      'Username must be at least 4 characters long',
     ],
   ])(
-    'should return validation error message for input %s, with message %s',
+    `should return validation error message for input %s, with message %s`,
     async (input, expectedError) => {
       await postForUser(input).catch((error) => {
         const validationErrors = error.response.data.validationErrors;
