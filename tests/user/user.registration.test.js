@@ -1,9 +1,9 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { createServer } from 'http';
 import axios from 'axios';
-import app from '../src/app.js';
-import UserEntity from '../src/user/user.entity.js';
-import sequelize from '../src/config/database.js';
+import app from '../../src/app.js';
+import UserEntity from '../../src/user/user.entity.js';
+import sequelize from '../../src/config/database.js';
 import console from 'node:console';
 
 let server;
