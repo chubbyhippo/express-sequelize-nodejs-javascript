@@ -115,10 +115,13 @@ describe('User input validation test', () => {
       { username: 'username', password: 'password', email: null },
       'Email is required',
     ],
-  ])('should return validation error: %s', async (input, expectedError) => {
-    await postForUser(input).catch((error) => {
-      const validationErrors = error.response.data.validationErrors;
-      expect(validationErrors[0].msg).toBe(expectedError);
-    });
-  });
+  ])(
+    'should return validation error message for input %s, with message %s',
+    async (input, expectedError) => {
+      await postForUser(input).catch((error) => {
+        const validationErrors = error.response.data.validationErrors;
+        expect(validationErrors[0].msg).toBe(expectedError);
+      });
+    }
+  );
 });
