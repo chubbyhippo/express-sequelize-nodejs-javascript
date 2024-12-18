@@ -26,7 +26,7 @@ beforeEach(async () => {
   await UserEntity.sync({ force: true });
 });
 
-describe('user registration test', () => {
+describe('User registration test', () => {
   it('should return hello world', async () => {
     const response = await axios.get(`${baseUrl}/`);
 
@@ -96,52 +96,29 @@ describe('user registration test', () => {
       }
     });
   });
+});
 
-  it('should return Username is required when username is null', async () => {
-    await postForUser({
-      username: null,
-      password: 'password',
-      email: 'test@test.com',
-    }).catch((error) => {
-      if (error.response) {
-        console.log(error.response);
-        expect(error.response.data).toHaveProperty('validationErrors');
-        const validationErrors = error.response.data.validationErrors;
-        console.log(validationErrors);
-        expect(validationErrors[0].msg).toBe('Username is required');
-      }
-    });
-  });
+describe('User input validation test', () => {
+  const postForUser = async (userInputs) =>
+    await axios.post(`${baseUrl}/api/users`, userInputs);
 
-  it('should return Password is required when password is null', async () => {
-    await postForUser({
-      username: 'username',
-      password: null,
-      email: 'test@test.com',
-    }).catch((error) => {
-      if (error.response) {
-        console.log(error.response);
-        expect(error.response.data).toHaveProperty('validationErrors');
-        const validationErrors = error.response.data.validationErrors;
-        console.log(validationErrors);
-        expect(validationErrors[0].msg).toBe('Password is required');
-      }
-    });
-  });
-
-  it('should return Email email is required when email is null', async () => {
-    await postForUser({
-      username: 'username',
-      password: 'password',
-      email: null,
-    }).catch((error) => {
-      if (error.response) {
-        console.log(error.response);
-        expect(error.response.data).toHaveProperty('validationErrors');
-        const validationErrors = error.response.data.validationErrors;
-        console.log(validationErrors);
-        expect(validationErrors[0].msg).toBe('Email is required');
-      }
+  it.each([
+    [
+      { username: null, password: 'password', email: 'test@test.com' },
+      'Username is required',
+    ],
+    [
+      { username: 'username', password: null, email: 'test@test.com' },
+      'Password is required',
+    ],
+    [
+      { username: 'username', password: 'password', email: null },
+      'Email is required',
+    ],
+  ])('should return validation error: %s', async (input, expectedError) => {
+    await postForUser(input).catch((error) => {
+      const validationErrors = error.response.data.validationErrors;
+      expect(validationErrors[0].msg).toBe(expectedError);
     });
   });
 });
