@@ -102,29 +102,24 @@ describe('User input validation test', () => {
   const postForUser = async (userInputs) =>
     await axios.post(`${baseUrl}/api/users`, userInputs);
 
-  it.each([
-    [
-      { username: null, password: 'password', email: 'test@test.com' },
-      'Username is required',
-    ],
-    [
-      { username: 'username', password: null, email: 'test@test.com' },
-      'Password is required',
-    ],
-    [
-      { username: 'username', password: 'password', email: null },
-      'Email is required',
-    ],
-    [
-      { username: 'usr', password: 'password', email: null },
-      'Username must be at least 4 characters long',
-    ],
-  ])(
-    `should return validation error message for input %s, with message %s`,
-    async (input, expectedError) => {
+  it.each`
+    field         | value    | expectedErrorMessage
+    ${'username'} | ${null}  | ${'Username is required'}
+    ${'password'} | ${null}  | ${'Password is required'}
+    ${'email'}    | ${null}  | ${'Email is required'}
+    ${'username'} | ${'usr'} | ${'Username must be at least 4 characters long'}
+  `(
+    `should return error message: $expectedErrorMessage for field: $field with value: $value`,
+    async (field, value, expectedErrorMessage) => {
+      const input = {
+        username: 'test',
+        password: 'password',
+        email: 'test@test.com',
+      };
+      input[field] = value;
       await postForUser(input).catch((error) => {
         const validationErrors = error.response.data.validationErrors;
-        expect(validationErrors[0].msg).toBe(expectedError);
+        expect(validationErrors[0].msg).toBe(expectedErrorMessage);
       });
     }
   );
