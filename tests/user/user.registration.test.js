@@ -105,10 +105,10 @@ describe('User input validation test', () => {
   it.each`
     field         | value    | expectedErrorMessage
     ${'username'} | ${null}  | ${'Username is required'}
-    ${'password'} | ${null}  | ${'Password is required'}
-    ${'email'}    | ${null}  | ${'Email is required'}
     ${'username'} | ${'usr'} | ${'Username must be between 4 and 32 characters long'}
     ${'username'} | ${'u'.repeat(33)} | ${'Username must be between 4 and 32 characters long'}
+    ${'password'} | ${null}  | ${'Password is required'}
+    ${'email'}    | ${null}  | ${'Email is required'}
   `(
     `should return error message: $expectedErrorMessage for field: $field with value: $value`,
     async (field, value, expectedErrorMessage) => {
