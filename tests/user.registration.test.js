@@ -115,6 +115,10 @@ describe('User input validation test', () => {
       { username: 'username', password: 'password', email: null },
       'Email is required',
     ],
+    [
+      { username: 'usr', password: 'password', email: null },
+      'Email is required',
+    ],
   ])(
     'should return validation error message for input %s, with message %s',
     async (input, expectedError) => {
