@@ -12,7 +12,11 @@ const userValidationRules = () => [
     .withMessage('Password is required')
     .bail()
     .isLength({ min: 6, max: 32 })
-    .withMessage('Password must be between 6 and 32 characters long'),
+    .withMessage('Password must be between 6 and 32 characters long')
+    .bail()
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/)
+    .withMessage('Password must contain at least one uppercase letter, one lowercase letter, and one number'),
+
   body('email')
     .notEmpty()
     .withMessage('Email is required')

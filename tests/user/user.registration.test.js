@@ -123,7 +123,7 @@ describe('User input validation test', () => {
     async ({ field, value, expectedErrorMessage }) => {
       const input = {
         username: 'test',
-        password: 'password',
+        password: 'P4ssword',
         email: 'test@test.com',
       };
 
