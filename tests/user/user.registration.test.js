@@ -113,7 +113,7 @@ describe('User input validation test', () => {
   const usernameLength = 'Username must be between 4 and 32 characters long';
   const passwordNull = 'Password is required';
   const passwordLength = 'Password must be between 6 and 32 characters long';
-  const passwordRequiredSpecials = 'Password must contain at least one uppercase letter, one lowercase letter, and one number';
+  const passwordPattern = 'Password must contain at least one uppercase letter, one lowercase letter, and one number';
   const emailNull = 'Email is required';
   const emailInvalid = 'Email must be valid';
 
@@ -124,9 +124,9 @@ describe('User input validation test', () => {
     ${'username'} | ${'u'.repeat(33)}      | ${usernameLength}
     ${'password'} | ${null}                | ${passwordNull}
     ${'password'} | ${'p'.repeat(5)}       | ${passwordLength}
-    ${'password'} | ${'lowercase'}         | ${passwordRequiredSpecials}
-    ${'password'} | ${'UPPERCASE'}         | ${passwordRequiredSpecials}
-    ${'password'} | ${'UPPERandlowercase'} | ${passwordRequiredSpecials}
+    ${'password'} | ${'lowercase'}         | ${passwordPattern}
+    ${'password'} | ${'UPPERCASE'}         | ${passwordPattern}
+    ${'password'} | ${'UPPERandlowercase'} | ${passwordPattern}
     ${'email'}    | ${null}                | ${emailNull}
     ${'email'}    | ${'test.com'}          | ${emailInvalid}
   `(
