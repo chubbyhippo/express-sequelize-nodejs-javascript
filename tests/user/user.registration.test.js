@@ -116,6 +116,7 @@ describe('User input validation test', () => {
   const passwordPattern = 'Password must contain at least one uppercase letter, one lowercase letter, and one number';
   const emailNull = 'Email is required';
   const emailInvalid = 'Email must be valid';
+  const emailRegistered = 'Email is already registered';
 
   it.each`
     field         | value                  | expectedErrorMessage
@@ -156,6 +157,6 @@ describe('User input validation test', () => {
       const validationErrors = error.response.data.validationErrors;
       errorMessage = validationErrors[0].msg;
     });
-    expect(errorMessage).toBe('Email is already registered');
+    expect(errorMessage).toBe(emailRegistered);
   });
 });
