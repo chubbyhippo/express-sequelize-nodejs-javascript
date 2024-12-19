@@ -6,7 +6,7 @@ class UserRepository {
   }
 
   async findUserByEmail(email) {
-    return UserEntity.findAll({ where: { email: email } });
+    return UserEntity.findOne({ where: { email: email } });
   }
 }
 
