@@ -72,6 +72,7 @@ describe('User registration test', () => {
   });
 
   it('should return status 400 when username is null', async () => {
+    let status;
     await postForUser({
       username: null,
       password: 'password',
@@ -79,9 +80,10 @@ describe('User registration test', () => {
     }).catch((error) => {
       if (error.response) {
         console.log(error.response);
-        expect(error.response.status).toBe(400);
+        status = error.response.status;
       }
     });
+    expect(status).toBe(400);
   });
 
   it('should return validationErrors field in response body when validation error occurs', async () => {
