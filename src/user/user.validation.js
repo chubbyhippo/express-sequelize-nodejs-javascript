@@ -1,5 +1,5 @@
 import { body, validationResult } from 'express-validator';
-import UserEntity from './user.entity.js';
+import userRepository from './user.repository.js';
 
 const userValidationRules = () => [
   body('username')
@@ -27,8 +27,8 @@ const userValidationRules = () => [
     .isEmail()
     .withMessage('Email must be valid')
     .bail()
-    .custom(async (value) => {
-      const user = await UserEntity.findOne({ where: { email: value } });
+    .custom(async (email) => {
+      const user = await userRepository.findUserByEmail(email);
       if (user) {
         return Promise.reject('Email is already registered');
       }
