@@ -27,8 +27,8 @@ const userValidationRules = () => [
     .isEmail()
     .withMessage('Email must be valid')
     .bail()
-    .custom(async (email) => {
-      const user = await UserEntity.findOne({ where: { email } });
+    .custom(async (value) => {
+      const user = await UserEntity.findOne({ where: { email: value } });
       if (user) {
         return Promise.reject('Email is already registered');
       }
