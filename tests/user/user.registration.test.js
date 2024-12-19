@@ -5,6 +5,7 @@ import app from '../../src/app.js';
 import UserEntity from '../../src/user/user.entity.js';
 import sequelize from '../../src/config/database.js';
 import console from 'node:console';
+import User from '../../src/user/user.entity.js';
 
 let server;
 let baseUrl;
@@ -26,6 +27,12 @@ beforeEach(async () => {
   await UserEntity.sync({ force: true });
 });
 
+const validUserInputs = {
+  username: 'test',
+  password: 'P4ssw0rd',
+  email: 'test@test.com',
+};
+
 describe('User registration test', () => {
   it('should return hello world', async () => {
     const response = await axios.get(`${baseUrl}/`);
@@ -35,11 +42,6 @@ describe('User registration test', () => {
     expect(responseText).toBe('Hello World!');
   });
 
-  const validUserInputs = {
-    username: 'test',
-    password: 'P4ssw0rd',
-    email: 'test@test.com',
-  };
   const postForUser = async (userInputs) =>
     await axios.post(`${baseUrl}/api/users`, userInputs);
 
@@ -137,4 +139,14 @@ describe('User input validation test', () => {
       expect(errorMessage).toBe(expectedErrorMessage);
     }
   );
+
+  it('should return email is already registered when email is already registered', async () => {
+    await User.create(validUserInputs);
+    let errorMessage;
+    await postForUser(validUserInputs).catch((error) => {
+      const validationErrors = error.response.data.validationErrors;
+      errorMessage = validationErrors[0].msg;
+    });
+    expect(errorMessage).toBe('Email is already registered');
+  });
 });

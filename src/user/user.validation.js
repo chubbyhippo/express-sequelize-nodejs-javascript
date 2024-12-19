@@ -1,4 +1,5 @@
 import { body, validationResult } from 'express-validator';
+import UserEntity from './user.entity.js';
 
 const userValidationRules = () => [
   body('username')
@@ -15,14 +16,24 @@ const userValidationRules = () => [
     .withMessage('Password must be between 6 and 32 characters long')
     .bail()
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/)
-    .withMessage('Password must contain at least one uppercase letter, one lowercase letter, and one number'),
+    .withMessage(
+      'Password must contain at least one uppercase letter, one lowercase letter, and one number'
+    ),
 
   body('email')
     .notEmpty()
     .withMessage('Email is required')
     .bail()
     .isEmail()
-    .withMessage('Email must be valid'),
+    .withMessage('Email must be valid')
+    .bail()
+    .custom(async (email) => {
+      const user = await UserEntity.findOne({ where: { email } });
+      if (user) {
+        return Promise.reject('Email is already registered');
+      }
+      return true;
+    }),
 ];
 
 const validate = (req, res, next) => {

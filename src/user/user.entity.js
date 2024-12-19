@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 const UserEntity = sequelize.define('user', {
   username: DataTypes.STRING,
   password: DataTypes.STRING,
-  email: DataTypes.STRING,
+  email: { type: DataTypes.STRING, unique: true },
 });
 
 UserEntity.beforeCreate((user) => {
