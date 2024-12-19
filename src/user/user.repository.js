@@ -6,6 +6,7 @@ class UserRepository {
   }
 
   async findUserByEmail(email) {
+    // noinspection JSCheckFunctionSignatures
     return UserEntity.findOne({ where: { email: email } });
   }
 }
