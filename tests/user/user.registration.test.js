@@ -87,6 +87,7 @@ describe('User registration test', () => {
   });
 
   it('should return validationErrors field in response body when validation error occurs', async () => {
+    let data;
     await postForUser({
       username: null,
       password: 'password',
@@ -94,9 +95,10 @@ describe('User registration test', () => {
     }).catch((error) => {
       if (error.response) {
         console.log(error.response);
-        expect(error.response.data).toHaveProperty('validationErrors');
+        data = error.response.data;
       }
     });
+    expect(data).toHaveProperty('validationErrors');
   });
 });
 
