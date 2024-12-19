@@ -104,7 +104,6 @@ describe('User registration test', () => {
   });
 });
 
-
 describe('User input validation test', () => {
   const postForUser = async (userInputs) =>
     await axios.post(`${baseUrl}/api/users`, userInputs);
@@ -113,7 +112,8 @@ describe('User input validation test', () => {
   const usernameLength = 'Username must be between 4 and 32 characters long';
   const passwordNull = 'Password is required';
   const passwordLength = 'Password must be between 6 and 32 characters long';
-  const passwordPattern = 'Password must contain at least one uppercase letter, one lowercase letter, and one number';
+  const passwordPattern =
+    'Password must contain at least one uppercase letter, one lowercase letter, and one number';
   const emailNull = 'Email is required';
   const emailInvalid = 'Email must be valid';
   const emailRegistered = 'Email is already registered';
@@ -151,6 +151,63 @@ describe('User input validation test', () => {
   );
 
   it('should return email is already registered when email is already registered', async () => {
+    await userRepository.create(validUserInputs);
+    let errorMessage;
+    await postForUser(validUserInputs).catch((error) => {
+      const validationErrors = error.response.data.validationErrors;
+      errorMessage = validationErrors[0].msg;
+    });
+    expect(errorMessage).toBe(emailRegistered);
+  });
+});
+
+describe('User input validation test in Chinese', () => {
+  const postForUser = async (userInputs) =>
+    await axios.post(`${baseUrl}/api/users`, userInputs);
+
+  const usernameNull = 'Username is required';
+  const usernameLength = 'Username must be between 4 and 32 characters long';
+  const passwordNull = 'Password is required';
+  const passwordLength = 'Password must be between 6 and 32 characters long';
+  const passwordPattern =
+    'Password must contain at least one uppercase letter, one lowercase letter, and one number';
+  const emailNull = 'Email is required';
+  const emailInvalid = 'Email must be valid';
+  const emailRegistered = 'Email is already registered';
+
+  it.each`
+    field         | value                  | expectedErrorMessage
+    ${'username'} | ${null}                | ${usernameNull}
+    ${'username'} | ${'usr'}               | ${usernameLength}
+    ${'username'} | ${'u'.repeat(33)}      | ${usernameLength}
+    ${'password'} | ${null}                | ${passwordNull}
+    ${'password'} | ${'p'.repeat(5)}       | ${passwordLength}
+    ${'password'} | ${'lowercase'}         | ${passwordPattern}
+    ${'password'} | ${'UPPERCASE'}         | ${passwordPattern}
+    ${'password'} | ${'UPPERandlowercase'} | ${passwordPattern}
+    ${'email'}    | ${null}                | ${emailNull}
+    ${'email'}    | ${'test.com'}          | ${emailInvalid}
+  `(
+    `should return error message: $expectedErrorMessage for field: $field with value: $value`,
+    async ({ field, value, expectedErrorMessage }) => {
+      const input = {
+        username: 'test',
+        password: 'P4ssword',
+        email: 'test@test.com',
+      };
+
+      input[field] = value;
+      let errorMessage;
+      await postForUser(input).catch((error) => {
+        const validationErrors = error.response.data.validationErrors;
+        errorMessage = validationErrors[0].msg;
+      });
+      console.log(errorMessage);
+      expect(errorMessage).toBe(expectedErrorMessage);
+    }
+  );
+
+  it(`should return message: ${emailRegistered} when email is already registered`, async () => {
     await userRepository.create(validUserInputs);
     let errorMessage;
     await postForUser(validUserInputs).catch((error) => {
