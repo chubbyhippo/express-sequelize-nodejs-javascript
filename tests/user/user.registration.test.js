@@ -163,17 +163,21 @@ describe('User input validation test', () => {
 
 describe('User input validation test in Chinese', () => {
   const postForUser = async (userInputs) =>
-    await axios.post(`${baseUrl}/api/users`, userInputs);
+    await axios.post(`${baseUrl}/api/users`, userInputs, {
+      headers: {
+        'Accept-Language': 'zh',
+      },
+    });
 
-  const usernameNull = 'Username is required';
-  const usernameLength = 'Username must be between 4 and 32 characters long';
-  const passwordNull = 'Password is required';
-  const passwordLength = 'Password must be between 6 and 32 characters long';
+  const usernameNull = '用户名是必需的';
+  const usernameLength = '用户名长度必须在4到32个字符之间';
+  const passwordNull = '密码是必需的';
+  const passwordLength = '密码长度必须在6到32个字符之间';
   const passwordPattern =
-    'Password must contain at least one uppercase letter, one lowercase letter, and one number';
-  const emailNull = 'Email is required';
-  const emailInvalid = 'Email must be valid';
-  const emailRegistered = 'Email is already registered';
+    '密码必须包含至少一个大写字母、一个小写字母和一个数字';
+  const emailNull = '邮箱是必需的';
+  const emailInvalid = '邮箱必须是有效的';
+  const emailRegistered = '邮箱已被注册';
 
   it.each`
     field         | value                  | expectedErrorMessage
