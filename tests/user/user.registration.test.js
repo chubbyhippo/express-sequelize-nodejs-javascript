@@ -104,22 +104,31 @@ describe('User registration test', () => {
   });
 });
 
+
 describe('User input validation test', () => {
   const postForUser = async (userInputs) =>
     await axios.post(`${baseUrl}/api/users`, userInputs);
 
+  const usernameNull = 'Username is required';
+  const usernameLength = 'Username must be between 4 and 32 characters long';
+  const passwordNull = 'Password is required';
+  const passwordLength = 'Password must be between 6 and 32 characters long';
+  const passwordRequiredSpecials = 'Password must contain at least one uppercase letter, one lowercase letter, and one number';
+  const emailNull = 'Email is required';
+  const emailInvalid = 'Email must be valid';
+
   it.each`
     field         | value                  | expectedErrorMessage
-    ${'username'} | ${null}                | ${'Username is required'}
-    ${'username'} | ${'usr'}               | ${'Username must be between 4 and 32 characters long'}
-    ${'username'} | ${'u'.repeat(33)}      | ${'Username must be between 4 and 32 characters long'}
-    ${'password'} | ${null}                | ${'Password is required'}
-    ${'password'} | ${'p'.repeat(5)}       | ${'Password must be between 6 and 32 characters long'}
-    ${'password'} | ${'lowercase'}         | ${'Password must contain at least one uppercase letter, one lowercase letter, and one number'}
-    ${'password'} | ${'UPPERCASE'}         | ${'Password must contain at least one uppercase letter, one lowercase letter, and one number'}
-    ${'password'} | ${'UPPERandlowercase'} | ${'Password must contain at least one uppercase letter, one lowercase letter, and one number'}
-    ${'email'}    | ${null}                | ${'Email is required'}
-    ${'email'}    | ${'test.com'}          | ${'Email must be valid'}
+    ${'username'} | ${null}                | ${usernameNull}
+    ${'username'} | ${'usr'}               | ${usernameLength}
+    ${'username'} | ${'u'.repeat(33)}      | ${usernameLength}
+    ${'password'} | ${null}                | ${passwordNull}
+    ${'password'} | ${'p'.repeat(5)}       | ${passwordLength}
+    ${'password'} | ${'lowercase'}         | ${passwordRequiredSpecials}
+    ${'password'} | ${'UPPERCASE'}         | ${passwordRequiredSpecials}
+    ${'password'} | ${'UPPERandlowercase'} | ${passwordRequiredSpecials}
+    ${'email'}    | ${null}                | ${emailNull}
+    ${'email'}    | ${'test.com'}          | ${emailInvalid}
   `(
     `should return error message: $expectedErrorMessage for field: $field with value: $value`,
     async ({ field, value, expectedErrorMessage }) => {
