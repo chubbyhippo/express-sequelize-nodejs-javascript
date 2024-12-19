@@ -5,7 +5,7 @@ import app from '../../src/app.js';
 import UserEntity from '../../src/user/user.entity.js';
 import sequelize from '../../src/config/database.js';
 import console from 'node:console';
-import User from '../../src/user/user.entity.js';
+import userRepository from '../../src/user/user.repository.js';
 
 let server;
 let baseUrl;
@@ -141,7 +141,7 @@ describe('User input validation test', () => {
   );
 
   it('should return email is already registered when email is already registered', async () => {
-    await User.create(validUserInputs);
+    await userRepository.create(validUserInputs);
     let errorMessage;
     await postForUser(validUserInputs).catch((error) => {
       const validationErrors = error.response.data.validationErrors;
