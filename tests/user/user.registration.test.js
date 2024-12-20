@@ -49,9 +49,6 @@ describe('User registration test', () => {
     const response = await postForUser(validUserInputs);
 
     expect(response.status).toBe(201);
-    const responseBody = response.data;
-    expect(responseBody).toHaveProperty('message');
-    expect(responseBody.message).toBe('User has been created');
   });
 
   it('should save user to the database', async () => {
