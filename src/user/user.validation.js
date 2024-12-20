@@ -1,45 +1,51 @@
 import { body, validationResult } from 'express-validator';
 import userRepository from './user.repository.js';
+import console from 'node:console';
 
 const userValidationRules = () => [
   body('username')
     .notEmpty()
-    .withMessage('Username is required')
+    .withMessage('usernameNull')
     .bail()
     .isLength({ min: 4, max: 32 })
-    .withMessage('Username must be between 4 and 32 characters long'),
+    .withMessage('usernameLength'),
   body('password')
     .notEmpty()
-    .withMessage('Password is required')
+    .withMessage('passwordNull')
     .bail()
     .isLength({ min: 6, max: 32 })
-    .withMessage('Password must be between 6 and 32 characters long')
+    .withMessage('passwordLength')
     .bail()
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/)
-    .withMessage(
-      'Password must contain at least one uppercase letter, one lowercase letter, and one number'
-    ),
+    .withMessage('passwordPattern'),
 
   body('email')
     .notEmpty()
-    .withMessage('Email is required')
+    .withMessage('emailNull')
     .bail()
     .isEmail()
-    .withMessage('Email must be valid')
+    .withMessage('emailInvalid')
     .bail()
     .custom(async (email) => {
       const user = await userRepository.findUserByEmail(email);
       if (user) {
-        return Promise.reject('Email is already registered');
+        return Promise.reject('emailRegistered');
       }
       return true;
     }),
 ];
 
 const validate = (req, res, next) => {
+  console.log(req);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({ validationErrors: errors.array() });
+    const validationErrors = {};
+    errors.array().forEach((error) => {
+      console.log(error);
+      console.log(req.t(error.msg));
+      return (validationErrors[error['path']] = req.t(error.msg));
+    });
+    return res.status(400).send({ validationErrors: validationErrors });
   }
   next();
 };

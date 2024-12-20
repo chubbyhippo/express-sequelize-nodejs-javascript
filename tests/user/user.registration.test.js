@@ -143,9 +143,8 @@ describe('User input validation test', () => {
       let errorMessage;
       await postForUser(input).catch((error) => {
         const validationErrors = error.response.data.validationErrors;
-        errorMessage = validationErrors[0].msg;
+        errorMessage = validationErrors[field];
       });
-      console.log(errorMessage);
       expect(errorMessage).toBe(expectedErrorMessage);
     }
   );
@@ -155,7 +154,7 @@ describe('User input validation test', () => {
     let errorMessage;
     await postForUser(validUserInputs).catch((error) => {
       const validationErrors = error.response.data.validationErrors;
-      errorMessage = validationErrors[0].msg;
+      errorMessage = validationErrors.email;
     });
     expect(errorMessage).toBe(emailRegistered);
   });
@@ -165,6 +164,8 @@ describe('User input validation test in Chinese', () => {
   const postForUser = async (userInputs) =>
     await axios.post(`${baseUrl}/api/users`, userInputs, {
       headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        'Content-Language': 'zh',
         'Accept-Language': 'zh',
       },
     });
@@ -204,7 +205,7 @@ describe('User input validation test in Chinese', () => {
       let errorMessage;
       await postForUser(input).catch((error) => {
         const validationErrors = error.response.data.validationErrors;
-        errorMessage = validationErrors[0].msg;
+        errorMessage = validationErrors[field];
       });
       console.log(errorMessage);
       expect(errorMessage).toBe(expectedErrorMessage);
@@ -216,7 +217,7 @@ describe('User input validation test in Chinese', () => {
     let errorMessage;
     await postForUser(validUserInputs).catch((error) => {
       const validationErrors = error.response.data.validationErrors;
-      errorMessage = validationErrors[0].msg;
+      errorMessage = validationErrors.email;
     });
     expect(errorMessage).toBe(emailRegistered);
   });
