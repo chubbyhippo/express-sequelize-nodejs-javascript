@@ -4,7 +4,7 @@ class UserController {
   createUser = () => async (req, res) => {
     await userService.createUser(req.body);
     res.status(201);
-    res.send({ message: 'UserEntity created' });
+    res.send({ message: req.t('userCreated') });
   };
 }
 
