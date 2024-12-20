@@ -57,6 +57,18 @@ describe('User registration test', () => {
     expect(response.data.message).toBe('User has been created');
   });
 
+  it('should return success message in Chinese when signup completed', async () => {
+    const response = await axios.post(`${baseUrl}/api/users`, validUserInputs, {
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        'Content-Language': 'zh',
+        'Accept-Language': 'zh',
+      },
+    });
+
+    expect(response.data.message).toBe('用户已创建');
+  });
+
   it('should save user to the database', async () => {
     await postForUser(validUserInputs);
     const users = await UserEntity.findAll();
