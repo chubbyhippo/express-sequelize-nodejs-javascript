@@ -6,5 +6,6 @@
   "passwordPattern": "密码必须包含至少一个大写字母、一个小写字母和一个数字",
   "emailNull": "邮箱是必需的",
   "emailInvalid": "邮箱必须是有效的",
-  "emailRegistered": "邮箱已被注册"
+  "emailRegistered": "邮箱已被注册",
+  "userCreated": "用户已创建"
 }
