@@ -6,5 +6,6 @@
   "passwordPattern": "Password must contain at least one uppercase letter, one lowercase letter, and one number",
   "emailNull": "Email is required",
   "emailInvalid": "Email must be valid",
-  "emailRegistered": "Email is already registered"
+  "emailRegistered": "Email is already registered",
+  "userCreated": "User has been created"
 }
