@@ -1,0 +1,12 @@
+{
+  "usernameNull": "用户名是必需的",
+  "usernameLength": "用户名长度必须在4到32个字符之间",
+  "passwordNull": "密码是必需的",
+  "passwordLength": "密码长度必须在6到32个字符之间",
+  "passwordPattern": "密码必须包含至少一个大写字母、一个小写字母和一个数字",
+  "emailNull": "邮箱是必需的",
+  "emailInvalid": "邮箱必须是有效的",
+  "emailRegistered": "邮箱已被注册"
+}
+
+
