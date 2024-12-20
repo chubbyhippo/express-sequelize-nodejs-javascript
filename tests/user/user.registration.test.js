@@ -51,6 +51,12 @@ describe('User registration test', () => {
     expect(response.status).toBe(201);
   });
 
+  it('should return success message when signup completed', async () => {
+    const response = await postForUser(validUserInputs);
+
+    expect(response.data.message).toBe('User has been created');
+  });
+
   it('should save user to the database', async () => {
     await postForUser(validUserInputs);
     const users = await UserEntity.findAll();
