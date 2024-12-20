@@ -1,0 +1,10 @@
+{
+  "usernameNull": "Username is required",
+  "usernameLength": "Username must be between 4 and 32 characters long",
+  "passwordNull": "Password is required",
+  "passwordLength": "Password must be between 6 and 32 characters long",
+  "passwordPattern": "Password must contain at least one uppercase letter, one lowercase letter, and one number",
+  "emailNull": "Email is required",
+  "emailInvalid": "Email must be valid",
+  "emailRegistered": "Email is already registered"
+}
