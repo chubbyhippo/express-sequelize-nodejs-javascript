@@ -18,7 +18,7 @@ i18next
       loadPath: './locales/{{lng}}/{{ns}}.json',
     },
     detection: {
-      lookupHeader: 'accept-language',
+      lookupHeader: 'accept-language', // must be lowercase
     },
   });
 
