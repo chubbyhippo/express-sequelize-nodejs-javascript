@@ -4,11 +4,11 @@ import console from 'node:console';
 import process from 'node:process';
 import i18next from 'i18next';
 import Backend from 'i18next-fs-backend';
-import middleware from 'i18next-http-middleware';
+import i18nextMiddleware from 'i18next-http-middleware';
 
 i18next
   .use(Backend)
-  .use(middleware.LanguageDetector)
+  .use(i18nextMiddleware.LanguageDetector)
   .init({
     fallbackLng: 'en',
     lng: 'en',
@@ -18,13 +18,13 @@ i18next
       loadPath: './locales/{{lng}}/{{ns}}.json',
     },
     detection: {
-      lookupHeader: 'accept-language', // must be lowercase
+      lookupHeader: 'Accept-Language',
     },
   });
 
 const app = express();
 
-app.use(middleware.handle(i18next));
+app.use(i18nextMiddleware.handle(i18next));
 
 app.use(express.json());
 
