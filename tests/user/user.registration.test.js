@@ -117,6 +117,13 @@ describe('User registration test', () => {
     });
     expect(data).toHaveProperty('validationErrors');
   });
+
+  it('should create user in inactive mode', async () => {
+    await postForUser(validUserInputs);
+    const users = await UserEntity.findAll();
+    expect(users[0].inactive).toBe(true);
+  });
+
 });
 
 describe('User input validation test', () => {
