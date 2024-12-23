@@ -129,6 +129,13 @@ describe('User registration test', () => {
     const users = await UserEntity.findAll();
     expect(users[0].inactive).toBe(true);
   });
+
+  it('should create an activationToken for user', async () => {
+    await postForUser({ ...validUserInputs, inactive: false });
+    const users = await UserEntity.findAll();
+    expect(users[0].activationToken).toBeTruthy();
+  });
+
 });
 
 describe('User input validation test', () => {

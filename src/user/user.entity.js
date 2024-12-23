@@ -7,6 +7,7 @@ const UserEntity = sequelize.define('user', {
   password: DataTypes.STRING,
   email: { type: DataTypes.STRING, unique: true },
   inactive: { type: DataTypes.BOOLEAN, defaultValue: true },
+  activationToken: DataTypes.STRING,
 });
 
 UserEntity.beforeCreate((user) => {
