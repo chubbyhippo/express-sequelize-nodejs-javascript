@@ -1,6 +1,5 @@
 import { body, validationResult } from 'express-validator';
 import userRepository from './user.repository.js';
-import console from 'node:console';
 
 const userValidationRules = () => [
   body('username')
@@ -36,13 +35,10 @@ const userValidationRules = () => [
 ];
 
 const validate = (req, res, next) => {
-  console.log(req);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const validationErrors = {};
     errors.array().forEach((error) => {
-      console.log(error);
-      console.log(req.t(error.msg));
       return (validationErrors[error['path']] = req.t(error.msg));
     });
     return res.status(400).send({ validationErrors: validationErrors });
