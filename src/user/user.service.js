@@ -1,7 +1,6 @@
 import userRepository from './user.repository.js';
 import crypto from 'crypto';
-import nodemailer from 'nodemailer';
-import nodemailerStub from 'nodemailer-stub';
+import emailService from '../email/email.service.js';
 
 const generateToken = (length) => {
   return crypto.randomBytes(length).toString('hex');
@@ -14,17 +13,12 @@ class UserService {
       inactive: true,
       activationToken: generateToken(16),
     };
-
-    const transporter = nodemailer.createTransport(
-      nodemailerStub.stubTransport
+    const savedUser = await userRepository.create(userToBeSaved);
+    await emailService.sendAccountActivationEmail(
+      userToBeSaved.email,
+      userToBeSaved.activationToken
     );
-    await transporter.sendMail({
-      from: '<EMAIL>',
-      to: userToBeSaved.email,
-      subject: 'Account activation',
-      text: `Please click on the following link to activate your account: http://localhost:3000/activate/${userToBeSaved.activationToken}`,
-    });
-    return await userRepository.create(userToBeSaved);
+    return savedUser;
   }
 }
 
