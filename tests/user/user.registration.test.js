@@ -124,6 +124,11 @@ describe('User registration test', () => {
     expect(users[0].inactive).toBe(true);
   });
 
+  it('should create user in inactive mode when request body contains inactive is false', async () => {
+    await postForUser({ ...validUserInputs, inactive: false });
+    const users = await UserEntity.findAll();
+    expect(users[0].inactive).toBe(true);
+  });
 });
 
 describe('User input validation test', () => {
