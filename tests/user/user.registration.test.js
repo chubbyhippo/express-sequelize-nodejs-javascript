@@ -6,6 +6,7 @@ import UserEntity from '../../src/user/user.entity.js';
 import sequelize from '../../src/config/database.js';
 import console from 'node:console';
 import userRepository from '../../src/user/user.repository.js';
+import nodemailerStub from 'nodemailer-stub';
 
 let server;
 let baseUrl;
@@ -136,6 +137,14 @@ describe('User registration test', () => {
     expect(users[0].activationToken).toBeTruthy();
   });
 
+  it('should send account activation email with activationToken', async () => {
+    await postForUser(validUserInputs);
+    const lastMail = nodemailerStub.interactsWithMail.lastMail();
+    expect(lastMail.to[0]).toBe('test@test.com');
+    const users = await UserEntity.findAll();
+    let savedUser = users[0];
+    expect(lastMail.content).toContain(savedUser.activationToken);
+  });
 });
 
 describe('User input validation test', () => {
