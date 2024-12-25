@@ -1,8 +1,9 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import axios from 'axios';
 import { baseUrl, validUserInputs } from './shared/user.test.setup.js';
 import console from 'node:console';
 import userRepository from '../../src/user/user.repository.js';
+import EmailService from '../../src/user/email.service.js';
 
 describe('i18n test in Chinese', () => {
   const postForUser = async (userInputs) =>
@@ -23,6 +24,7 @@ describe('i18n test in Chinese', () => {
   const emailNull = '邮箱是必需的';
   const emailInvalid = '邮箱必须是有效的';
   const emailRegistered = '邮箱已被注册';
+  const emailSentFailed = '电子邮件发送失败';
 
   it.each`
     field         | value                  | expectedErrorMessage
@@ -64,5 +66,22 @@ describe('i18n test in Chinese', () => {
       errorMessage = validationErrors.email;
     });
     expect(errorMessage).toBe(emailRegistered);
+  });
+
+  it(`should return message: ${emailSentFailed} when email sending have failed in chinese`, async () => {
+    const mockSendAccountActivationEmail = vi
+      .spyOn(EmailService, 'sendAccountActivationEmail')
+      .mockRejectedValue({
+        message: '电子邮件发送失败',
+      });
+    let errorMessage;
+    await postForUser(validUserInputs).catch((error) => {
+      if (error.response) {
+        console.log(error.response);
+        errorMessage = error.response.data.message;
+      }
+    });
+    expect(errorMessage).toBe(emailSentFailed);
+    mockSendAccountActivationEmail.mockRestore();
   });
 });

@@ -7,5 +7,6 @@
   "emailNull": "邮箱是必需的",
   "emailInvalid": "邮箱必须是有效的",
   "emailRegistered": "邮箱已被注册",
-  "userCreated": "用户已创建"
+  "userCreated": "用户已创建",
+  "emailSentFailed": "电子邮件发送失败"
 }
