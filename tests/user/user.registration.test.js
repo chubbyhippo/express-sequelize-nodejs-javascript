@@ -154,6 +154,24 @@ describe('User registration test', () => {
     let savedUser = users[0];
     expect(lastMail.content).toContain(savedUser.activationToken);
   });
+
+  it('should return 502 when email sending have failed', async () => {
+    const mockSendAccountActivationEmail = vi
+      .spyOn(EmailService, 'sendAccountActivationEmail')
+      .mockRejectedValue({
+        message: 'Email sending have failed',
+      });
+    let status;
+    await postForUser(validUserInputs).catch((error) => {
+      if (error.response) {
+        console.log(error.response);
+        status = error.response.status;
+      }
+    });
+    expect(status).toBe(502);
+
+    mockSendAccountActivationEmail.mockRestore();
+  });
 });
 
 describe('i18n test', () => {
@@ -209,24 +227,6 @@ describe('i18n test', () => {
       errorMessage = validationErrors.email;
     });
     expect(errorMessage).toBe(emailRegistered);
-  });
-
-  it('should return 502 when email sending have failed', async () => {
-    const mockSendAccountActivationEmail = vi
-      .spyOn(EmailService, 'sendAccountActivationEmail')
-      .mockRejectedValue({
-        message: 'Email sending have failed',
-      });
-    let status;
-    await postForUser(validUserInputs).catch((error) => {
-      if (error.response) {
-        console.log(error.response);
-        status = error.response.status;
-      }
-    });
-    expect(status).toBe(502);
-
-    mockSendAccountActivationEmail.mockRestore();
   });
 });
 
