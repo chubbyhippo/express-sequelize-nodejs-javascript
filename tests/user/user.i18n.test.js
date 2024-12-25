@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
+import { baseUrl, validUserInputs } from './shared/user.test.setup.js';
 import axios from 'axios';
 import userRepository from '../../src/user/user.repository.js';
 import console from 'node:console';
-import { baseUrl, validUserInputs } from './shared/user.test.setup.js';
 
 describe('i18n test', () => {
   const postForUser = async (userInputs) =>
