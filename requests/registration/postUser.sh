@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
-curl --request POST \
+curl --verbose \
+  --request POST \
   --url http://localhost:8080/api/users \
   --header 'Content-Type: application/json' \
   --data '{
