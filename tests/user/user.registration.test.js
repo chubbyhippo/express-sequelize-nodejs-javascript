@@ -230,7 +230,7 @@ describe('i18n test', () => {
   });
 });
 
-describe('User input validation test in Chinese', () => {
+describe('i18n test in Chinese', () => {
   const postForUser = async (userInputs) =>
     await axios.post(`${baseUrl}/api/users`, userInputs, {
       headers: {
