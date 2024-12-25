@@ -1,6 +1,6 @@
 import userRepository from './user.repository.js';
 import crypto from 'crypto';
-import emailService from '../email/email.service.js';
+import emailService from './email.service.js';
 
 const generateToken = (length) => {
   return crypto.randomBytes(length).toString('hex');

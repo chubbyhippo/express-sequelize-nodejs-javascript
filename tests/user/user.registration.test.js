@@ -14,7 +14,7 @@ import UserEntity from '../../src/user/user.entity.js';
 import sequelize from '../../src/config/database.js';
 import console from 'node:console';
 import nodemailerStub from 'nodemailer-stub';
-import EmailService from '../../src/email/email.service.js';
+import EmailService from '../../src/user/email.service.js';
 
 let server;
 let baseUrl;
