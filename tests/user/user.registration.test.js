@@ -126,4 +126,22 @@ describe('User registration test', () => {
     expect(status).toBe(502);
     mockSendAccountActivationEmail.mockRestore();
   });
+
+  it('should not save user to the database when email sending have failed', async () => {
+    const mockSendAccountActivationEmail = vi
+      .spyOn(EmailService, 'sendAccountActivationEmail')
+      .mockRejectedValue({
+        message: 'Email sending have failed',
+      });
+    await postForUser(validUserInputs).catch((error) => {
+      if (error.response) {
+        console.log(error.response);
+      }
+    });
+    mockSendAccountActivationEmail.mockRestore();
+
+    const users = await UserEntity.findAll();
+    expect(users.length).toBe(0);
+
+  })
 });
