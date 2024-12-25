@@ -124,7 +124,6 @@ describe('User registration test', () => {
       }
     });
     expect(status).toBe(502);
-
     mockSendAccountActivationEmail.mockRestore();
   });
 });
