@@ -1,4 +1,4 @@
 ## post user
 ```sh
-sh ./postUser.sh
+sh ./registration/postUser.sh
 ```
