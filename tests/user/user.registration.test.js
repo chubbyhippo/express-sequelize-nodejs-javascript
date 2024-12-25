@@ -1,4 +1,12 @@
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import {
+  afterAll,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+} from 'vitest';
 import { createServer } from 'http';
 import axios from 'axios';
 import app from '../../src/app.js';
@@ -7,6 +15,7 @@ import sequelize from '../../src/config/database.js';
 import console from 'node:console';
 import userRepository from '../../src/user/user.repository.js';
 import nodemailerStub from 'nodemailer-stub';
+import EmailService from '../../src/email/email.service.js';
 
 let server;
 let baseUrl;
@@ -200,6 +209,24 @@ describe('User input validation test', () => {
       errorMessage = validationErrors.email;
     });
     expect(errorMessage).toBe(emailRegistered);
+  });
+
+  it('should return 502 when email sending have failed', async () => {
+    const mockSendAccountActivationEmail = vi
+      .spyOn(EmailService, 'sendAccountActivationEmail')
+      .mockRejectedValue({
+        message: 'Email sending have failed',
+      });
+    let status;
+    await postForUser(validUserInputs).catch((error) => {
+      if (error.response) {
+        console.log(error.response);
+        status = error.response.status;
+      }
+    });
+    expect(status).toBe(502);
+
+    mockSendAccountActivationEmail.mockRestore();
   });
 });
 
