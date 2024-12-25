@@ -2,6 +2,8 @@ import userRepository from './user.repository.js';
 import crypto from 'crypto';
 import emailService from './email.service.js';
 import sequelize from '../config/database.js';
+import EmailException from './email.exception.js';
+import console from 'node:console';
 
 const generateToken = (length) => {
   return crypto.randomBytes(length).toString('hex');
@@ -25,8 +27,9 @@ class UserService {
       );
       await transaction.commit();
     } catch (error) {
+      console.error(error);
       await transaction.rollback();
-      throw error;
+      throw new EmailException();
     }
     return savedUser;
   }

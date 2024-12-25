@@ -19,7 +19,7 @@ router.post(
       res.status(502);
       console.error(error);
       // noinspection JSCheckFunctionSignatures
-      res.send({ message: req.t('emailSentFailed') });
+      res.send({ message: req.t(error.message) });
     }
   }
 );
