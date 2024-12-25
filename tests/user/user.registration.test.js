@@ -156,7 +156,7 @@ describe('User registration test', () => {
   });
 });
 
-describe('User input validation test', () => {
+describe('i18n test', () => {
   const postForUser = async (userInputs) =>
     await axios.post(`${baseUrl}/api/users`, userInputs);
 
