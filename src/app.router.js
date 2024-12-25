@@ -1,6 +1,6 @@
 import express from 'express';
-import { userValidationRules, validate } from './user.validation.js';
-import userController from './user.controller.js';
+import { userValidationRules, validate } from './user/user.validation.js';
+import userController from './user/user.controller.js';
 
 const router = express.Router();
 
