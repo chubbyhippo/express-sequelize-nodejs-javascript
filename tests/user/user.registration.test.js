@@ -44,14 +44,6 @@ const validUserInputs = {
 };
 
 describe('User registration test', () => {
-  it('should return hello world', async () => {
-    const response = await axios.get(`${baseUrl}/`);
-
-    expect(response.status).toBe(200);
-    let responseText = response.data;
-    expect(responseText).toBe('Hello World!');
-  });
-
   const postForUser = async (userInputs) =>
     await axios.post(`${baseUrl}/api/users`, userInputs);
 

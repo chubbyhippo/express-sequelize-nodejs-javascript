@@ -31,10 +31,6 @@ app.use(express.json());
 
 app.use(router);
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
-
 console.log(`Environment: ${process.env.NODE_ENV}`);
 
 export default app;
