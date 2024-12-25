@@ -1,5 +1,5 @@
 import express from 'express';
-import userRouter from './app.router.js';
+import router from './app.router.js';
 import console from 'node:console';
 import process from 'node:process';
 import i18next from 'i18next';
@@ -29,7 +29,7 @@ app.use(i18nextMiddleware.handle(i18next));
 
 app.use(express.json());
 
-app.use(userRouter);
+app.use(router);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
