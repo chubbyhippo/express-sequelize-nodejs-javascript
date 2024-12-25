@@ -1,8 +1,9 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { baseUrl, validUserInputs } from './shared/user.test.setup.js';
 import axios from 'axios';
 import userRepository from '../../src/user/user.repository.js';
 import console from 'node:console';
+import EmailService from '../../src/user/email.service.js';
 
 describe('i18n test', () => {
   const postForUser = async (userInputs) =>
@@ -17,6 +18,7 @@ describe('i18n test', () => {
   const emailNull = 'Email is required';
   const emailInvalid = 'Email must be valid';
   const emailRegistered = 'Email is already registered';
+  const emailSentFailed = 'Email sending have failed';
 
   it.each`
     field         | value                  | expectedErrorMessage
@@ -57,6 +59,23 @@ describe('i18n test', () => {
       errorMessage = validationErrors.email;
     });
     expect(errorMessage).toBe(emailRegistered);
+  });
+
+  it(`should return message: ${emailSentFailed} when email sending have failed`, async () => {
+    const mockSendAccountActivationEmail = vi
+      .spyOn(EmailService, 'sendAccountActivationEmail')
+      .mockRejectedValue({
+        message: 'Email sending have failed',
+      });
+    let errorMessage;
+    await postForUser(validUserInputs).catch((error) => {
+      if (error.response) {
+        console.log(error.response);
+        errorMessage = error.response.data.message;
+      }
+    });
+    expect(errorMessage).toBe(emailSentFailed);
+    mockSendAccountActivationEmail.mockRestore();
   });
 });
 

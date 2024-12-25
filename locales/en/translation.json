@@ -7,5 +7,6 @@
   "emailNull": "Email is required",
   "emailInvalid": "Email must be valid",
   "emailRegistered": "Email is already registered",
-  "userCreated": "User has been created"
+  "userCreated": "User has been created",
+  "emailSentFailed": "Email sending have failed"
 }
