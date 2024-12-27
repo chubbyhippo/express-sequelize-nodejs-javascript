@@ -131,7 +131,7 @@ describe('User registration test', () => {
     mockSendAccountActivationEmail.mockRestore();
   });
 
-  it('should not save user to the database when email sending have failed', async () => {
+  it('should not save user to the database when email sending have failed using mock', async () => {
     const mockSendAccountActivationEmail = vi
       .spyOn(EmailService, 'sendAccountActivationEmail')
       .mockRejectedValue({
