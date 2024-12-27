@@ -1,13 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
-import {
-  baseUrl,
-  validUserInputs,
-  lastMail,
-} from './shared/user.test.setup.js';
+import { baseUrl, validUserInputs } from './shared/user.test.setup.js';
 import axios from 'axios';
 import UserEntity from '../../src/user/user.entity.js';
 import console from 'node:console';
 import EmailService from '../../src/user/email.service.js';
+import { lastMail } from './shared/user.email.setup.js';
 
 describe('User registration test', () => {
   const postForUser = async (userInputs) =>
