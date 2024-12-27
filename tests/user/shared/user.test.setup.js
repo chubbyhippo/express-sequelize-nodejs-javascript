@@ -1,7 +1,6 @@
 import { afterAll, beforeAll, beforeEach } from 'vitest';
 import { createServer } from 'http';
 
-let lastMail;
 import app from '../../../src/app.js';
 import sequelize from '../../../src/config/database.js';
 import UserEntity from '../../../src/user/user.entity.js';
@@ -11,6 +10,7 @@ import console from 'node:console';
 let server;
 let baseUrl;
 let emailServer;
+let lastMail;
 
 beforeAll(async () => {
   server = createServer(app);
