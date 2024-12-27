@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import axios from 'axios';
-import { baseUrl, validUserInputs } from './shared/user.server.setup.js';
+import { baseUrl } from './shared/user.server.setup.js';
+import { validUserInputs } from './shared/user.test.data.js';
 import console from 'node:console';
 import userRepository from '../../src/user/user.repository.js';
 import EmailService from '../../src/user/email.service.js';
@@ -55,7 +56,7 @@ describe('i18n test in Chinese', () => {
       });
       console.log(errorMessage);
       expect(errorMessage).toBe(expectedErrorMessage);
-    }
+    },
   );
 
   it(`should return message: ${emailRegistered} when email is already registered`, async () => {

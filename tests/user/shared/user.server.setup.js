@@ -26,10 +26,4 @@ beforeEach(async () => {
   await UserEntity.sync({ force: true });
 });
 
-const validUserInputs = {
-  username: 'test',
-  password: 'P4ssw0rd',
-  email: 'test@test.com',
-};
-
-export { baseUrl, validUserInputs };
+export { baseUrl };
