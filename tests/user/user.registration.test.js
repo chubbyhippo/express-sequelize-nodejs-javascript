@@ -114,7 +114,7 @@ describe('User registration test', () => {
     expect(lastMail).toContain(savedUser.activationToken);
   });
 
-  it('should return 502 when email sending have failed', async () => {
+  it('should return 502 when email sending have failed when using mock', async () => {
     const mockSendAccountActivationEmail = vi
       .spyOn(EmailService, 'sendAccountActivationEmail')
       .mockRejectedValue({
