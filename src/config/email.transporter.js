@@ -1,6 +1,9 @@
 import nodemailer from 'nodemailer';
-import nodemailerStub from 'nodemailer-stub';
 
-const transporter = nodemailer.createTransport(nodemailerStub.stubTransport);
+const transporter = nodemailer.createTransport({
+  host: 'localhost',
+  port: 2525,
+  tls: { rejectUnauthorized: false },
+});
 
 export default transporter;
