@@ -1,10 +1,13 @@
 import { describe, expect, it, vi } from 'vitest';
-import { baseUrl, validUserInputs } from './shared/user.test.setup.js';
+import {
+  baseUrl,
+  validUserInputs,
+  lastMail,
+} from './shared/user.test.setup.js';
 import axios from 'axios';
 import UserEntity from '../../src/user/user.entity.js';
 import console from 'node:console';
 import EmailService from '../../src/user/email.service.js';
-import { SMTPServer } from 'smtp-server';
 
 describe('User registration test', () => {
   const postForUser = async (userInputs) =>
@@ -102,32 +105,12 @@ describe('User registration test', () => {
   });
 
   it('should send account activation email with activationToken', async () => {
-    let lastMail;
-    // noinspection JSUnusedGlobalSymbols
-    const server = new SMTPServer({
-      authOptional: true,
-      onData: (stream, session, callback) => {
-        let mailBody;
-        stream.on('data', (chunk) => {
-          console.log(chunk.toString());
-          mailBody += chunk.toString();
-        });
-        stream.on('end', () => {
-          lastMail = mailBody;
-          callback();
-        });
-      },
-    });
-
-    await server.listen(2525, 'localhost');
     await postForUser(validUserInputs);
-    await server.close(undefined);
-
-    expect(lastMail).toContain('test@test.com');
 
     const users = await UserEntity.findAll();
     let savedUser = users[0];
 
+    expect(lastMail).toContain('test@test.com');
     expect(lastMail).toContain(savedUser.activationToken);
   });
 
