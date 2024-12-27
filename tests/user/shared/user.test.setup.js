@@ -1,11 +1,13 @@
 import { afterAll, beforeAll, beforeEach } from 'vitest';
 import { createServer } from 'http';
-
 import app from '../../../src/app.js';
 import sequelize from '../../../src/config/database.js';
 import UserEntity from '../../../src/user/user.entity.js';
 import { SMTPServer } from 'smtp-server';
 import console from 'node:console';
+
+const serverPort = 0;
+const emailServerPort = 2525;
 
 let server;
 let baseUrl;
@@ -14,7 +16,7 @@ let lastMail;
 
 beforeAll(async () => {
   server = createServer(app);
-  await server.listen(0);
+  await server.listen(serverPort);
 
   await sequelize.sync({ force: true });
 
@@ -35,7 +37,7 @@ beforeAll(async () => {
       });
     },
   });
-  await emailServer.listen(2525, 'localhost');
+  await emailServer.listen(emailServerPort, 'localhost');
 });
 
 afterAll(async () => {
