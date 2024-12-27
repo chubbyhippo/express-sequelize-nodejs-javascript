@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { baseUrl, validUserInputs } from './shared/user.test.setup.js';
+import { baseUrl, validUserInputs } from './shared/user.server.setup.js';
 import axios from 'axios';
 import userRepository from '../../src/user/user.repository.js';
 import console from 'node:console';
