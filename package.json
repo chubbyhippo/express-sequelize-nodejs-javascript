@@ -8,7 +8,8 @@
     "dev": "cross-env NODE_ENV=dev node --watch --inspect .",
     "lint": "eslint .",
     "start": "cross-env NODE_ENV=dev node .",
-    "test": "cross-env NODE_ENV=test vitest"
+    "test": "cross-env NODE_ENV=test vitest",
+    "coverage": "cross-env NODE_ENV=test vitest run --coverage"
   },
   "author": "chubbyhippo",
   "license": "Apache-2.0",
