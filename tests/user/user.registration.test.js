@@ -5,16 +5,22 @@ import axios from 'axios';
 import UserEntity from '../../src/user/user.entity.js';
 import console from 'node:console';
 import EmailService from '../../src/user/email.service.js';
-import { lastMail } from './shared/user.email.setup.js';
+// import { lastMail } from './shared/user.email.setup.js';
 
 describe('User registration test', () => {
   const postForUser = async (userInputs) =>
     await axios.post(`${baseUrl}/api/users`, userInputs);
 
   it('should return status 201 when signup request is valid', async () => {
+    const mockSendAccountActivationEmail = vi
+      .spyOn(EmailService, 'sendAccountActivationEmail')
+      .mockImplementation(() => Promise.resolve());
+
     const response = await postForUser(validUserInputs);
+    mockSendAccountActivationEmail.mockRestore();
 
     expect(response.status).toBe(201);
+
   });
 
   it('should return success message when signup completed', async () => {
