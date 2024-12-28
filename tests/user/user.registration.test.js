@@ -12,28 +12,22 @@ describe('User registration test', () => {
     await axios.post(`${baseUrl}/api/users`, userInputs);
 
   it('should return status 201 when signup request is valid', async () => {
-    const mockSendAccountActivationEmail = vi
-      .spyOn(EmailService, 'sendAccountActivationEmail')
-      .mockImplementation(() => Promise.resolve());
-
     const response = await postForUser(validUserInputs);
-    mockSendAccountActivationEmail.mockRestore();
 
     expect(response.status).toBe(201);
   });
 
   it('should return success message when signup completed', async () => {
-    const mockSendAccountActivationEmail = vi
-      .spyOn(EmailService, 'sendAccountActivationEmail')
-      .mockImplementation(() => Promise.resolve());
-
     const response = await postForUser(validUserInputs);
-    mockSendAccountActivationEmail.mockRestore();
 
     expect(response.data.message).toBe('User has been created');
   });
 
   it('should return success message in Chinese when signup completed', async () => {
+    const mockSendAccountActivationEmail = vi
+      .spyOn(EmailService, 'sendAccountActivationEmail')
+      .mockImplementation(() => Promise.resolve());
+
     const response = await axios.post(`${baseUrl}/api/users`, validUserInputs, {
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
@@ -41,6 +35,7 @@ describe('User registration test', () => {
         'Accept-Language': 'zh',
       },
     });
+    mockSendAccountActivationEmail.mockRestore();
 
     expect(response.data.message).toBe('用户已创建');
   });
