@@ -20,11 +20,15 @@ describe('User registration test', () => {
     mockSendAccountActivationEmail.mockRestore();
 
     expect(response.status).toBe(201);
-
   });
 
   it('should return success message when signup completed', async () => {
+    const mockSendAccountActivationEmail = vi
+      .spyOn(EmailService, 'sendAccountActivationEmail')
+      .mockImplementation(() => Promise.resolve());
+
     const response = await postForUser(validUserInputs);
+    mockSendAccountActivationEmail.mockRestore();
 
     expect(response.data.message).toBe('User has been created');
   });
