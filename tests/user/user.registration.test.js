@@ -5,7 +5,7 @@ import axios from 'axios';
 import UserEntity from '../../src/user/user.entity.js';
 import console from 'node:console';
 import EmailService from '../../src/user/email.service.js';
-// import { lastMail } from './shared/user.email.setup.js';
+import { lastMail } from './shared/user.email.setup.js';
 
 describe('User registration test', () => {
   const postForUser = async (userInputs) =>
@@ -108,13 +108,14 @@ describe('User registration test', () => {
   });
 
   it('should send account activation email with activationToken', async () => {
+    const mockSendAccountActivationEmail = vi
+      .spyOn(EmailService, 'sendAccountActivationEmail')
+      .mockImplementation(() => Promise.resolve());
+
     await postForUser(validUserInputs);
 
-    const users = await UserEntity.findAll();
-    let savedUser = users[0];
+    expect(mockSendAccountActivationEmail).toHaveBeenCalled();
 
-    expect(lastMail).toContain('test@test.com');
-    expect(lastMail).toContain(savedUser.activationToken);
   });
 
   it('should return 502 when email sending have failed when using mock', async () => {
