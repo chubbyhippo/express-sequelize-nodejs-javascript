@@ -1,6 +1,6 @@
-class EmailSendingFailedException {
-  constructor() {
-    this.message = 'emailSentFailed';
+class EmailSendingFailedException extends Error {
+  constructor(message = 'emailSentFailed') {
+    super(message);
   }
 }
 
