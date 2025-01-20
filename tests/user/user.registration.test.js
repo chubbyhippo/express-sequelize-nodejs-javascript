@@ -5,7 +5,7 @@ import axios from 'axios';
 import UserEntity from '../../src/user/user.entity.js';
 import console from 'node:console';
 import EmailService from '../../src/user/email.service.js';
-import { lastMail } from './shared/user.email.setup.js';
+import './shared/user.email.setup.js';
 
 describe('User registration test', () => {
   const postForUser = async (userInputs) =>
@@ -115,7 +115,6 @@ describe('User registration test', () => {
     await postForUser(validUserInputs);
 
     expect(mockSendAccountActivationEmail).toHaveBeenCalled();
-
   });
 
   it('should return 502 when email sending have failed when using mock', async () => {
