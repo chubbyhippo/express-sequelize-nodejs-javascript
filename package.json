@@ -18,7 +18,7 @@
     "config": "^3.3.12",
     "express": "^4.21.2",
     "express-validator": "^7.2.1",
-    "i18next": "^24.2.2",
+    "i18next": "^24.2.3",
     "i18next-fs-backend": "^2.6.0",
     "i18next-http-middleware": "^3.7.1",
     "nodemailer": "^6.10.0",
@@ -26,15 +26,15 @@
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
-    "@eslint/js": "^9.21.0",
-    "@types/express": "^5.0.0",
-    "@vitest/coverage-v8": "^3.0.7",
-    "axios": "^1.8.1",
+    "@eslint/js": "^9.23.0",
+    "@types/express": "^5.0.1",
+    "@vitest/coverage-v8": "^3.0.9",
+    "axios": "^1.8.4",
     "cross-env": "^7.0.3",
-    "eslint": "^9.21.0",
-    "eslint-config-prettier": "^10.0.2",
+    "eslint": "^9.23.0",
+    "eslint-config-prettier": "^10.1.1",
     "prettier": "^3.5.3",
     "smtp-server": "^3.13.6",
-    "vitest": "^3.0.7"
+    "vitest": "^3.0.9"
   }
 }
